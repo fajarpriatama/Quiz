@@ -1,0 +1,21 @@
+select
+	a.id, a.nama_depan, a.nama_belakang, 
+	b.nomor_utama, b.deskripsi, c.jenis_kendaraan as jenis_kendaraan_pertama, 
+	c.merk_kendaraan as merk_kendaraan_pertama, c.tipe_kendaraan as tipe_kendaraan_pertama,
+	case
+		when c.tipe_kendaraan = 'Majesty' then (
+			select c.tipe_kendaraan
+			from table_3 c
+			where c.tipe_kendaraan = 'Majesty'
+		)
+		when c.tipe_kendaraan = 'Rush' then (
+			select c.tipe_kendaraan
+			from table_3 c
+			where c.tipe_kendaraan = 'Rush'
+		)
+	end as tipe_kendaraan_kedua
+from table_1 a
+	left join table_2 b on a.id = b.id 
+	right join table_3 c on c.id = a.id
+--     where not c.tipe_kendaraan = 'Rush' and not c.tipe_kendaraan = 'Majesty'
+order by a.id asc;
